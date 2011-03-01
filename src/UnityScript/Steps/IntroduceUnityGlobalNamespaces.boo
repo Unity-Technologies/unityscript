@@ -9,6 +9,7 @@ class IntroduceUnityGlobalNamespaces(AbstractCompilerStep):
 		NameResolutionService.Reset()		
 		NameResolutionService.GlobalNamespace = NamespaceDelegator(
 										NameResolutionService.GlobalNamespace,
+										SafeGetNamespace("Boo.Lang"),
 										TypeSystemServices.BuiltinsType,
 										SafeGetNamespace("UnityScript.Lang"),
 										TypeSystemServices.Map(UnityScript.Lang.UnityBuiltins),

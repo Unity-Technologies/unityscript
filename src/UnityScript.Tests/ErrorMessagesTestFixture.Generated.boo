@@ -5,7 +5,7 @@ import NUnit.Framework
 	
 partial class ErrorMessagesTestFixture:
 
-	
+	[Ignore("reverted for 3.3")]
 	[Test] def Boo_Lang_List_is_not_visible_by_default():
 		RunTestCase("tests/error-messages/Boo.Lang.List-is-not-visible-by-default.js")
 		
