@@ -231,9 +231,6 @@ tokens
 			li = ToLexicalInfo(LT(1))
 		ReportError(UnityScriptCompilerErrors.SemicolonExpected(li))		
 	
-	static def CreateModuleName(fname as string):
-		return System.IO.Path.GetFileNameWithoutExtension(fname)
-		
 	static def IsConstructorName(name as string, type as TypeDefinition):
 		return type.NodeType != NodeType.Module and name == type.Name
 		
@@ -259,25 +256,11 @@ tokens
 			type.Members.Add(function)
 			FlushAttributes(function)
 		return function
-	
-	def ValidateFunctionDeclaration(function as Method, getter as IToken, setter as IToken):
-		// TODO: move this error checking to a compiler step
-		// as well as properly checking the type of the accessors
-		// against the type of the property
-		if setter is not null:
-			if function.Parameters.Count != 1 or function.Parameters[0].Name != "value":
-				ReportError(UnityScriptCompilerErrors.InvalidPropertySetter(function.LexicalInfo))
-			function.Parameters.Clear()
-			return
-		if getter is not null:
-			if function.Parameters.Count > 0:
-				ReportError(UnityScriptCompilerErrors.InvalidPropertySetter(function.LexicalInfo))
 }
 
 start[CompileUnit cu]
 {
-	module = Module(LexicalInfo(getFilename(), 1, 1))
-	module.Name = CreateModuleName(getFilename())
+	module = CodeFactory.NewModule(getFilename())
 	cu.Modules.Add(module)
 	globals = module.Globals
 }:
@@ -294,7 +277,7 @@ start[CompileUnit cu]
 			module_member[module]
 		)
 		| module_member[module]
-		| statement[globals]
+		| compound_or_single_stmt[globals]
 	)*
 	eof:EOF
 	{
@@ -558,7 +541,6 @@ interface_member[TypeDefinition parent]
 		function = AddFunctionTo(parent, memberName, getter, setter) 
 	}
 	LPAREN (parameter_declaration_list[function])? RPAREN
-	{ ValidateFunctionDeclaration(function, getter, setter) }
 	(
 		COLON tr=type_reference	{ function.ReturnType = tr; }
 	)?
@@ -629,7 +611,6 @@ function_member[TypeDefinition cd] returns [TypeMember member]
 	FUNCTION (getter:GET | setter:SET)? memberName=identifier 
 	{ member = function = AddFunctionTo(cd, memberName, getter, setter) }	
 	function_body[function]
-	{ ValidateFunctionDeclaration(function, getter, setter) }
 ;
 
 function_body[Method method]
@@ -682,7 +663,7 @@ block[Block b]
 {
 }:
 	LBRACE
-	(statement[b])*
+	(compound_or_single_stmt[b])*
 	rbrace:RBRACE { SetEndSourceLocation(b, rbrace) }
 ;
 

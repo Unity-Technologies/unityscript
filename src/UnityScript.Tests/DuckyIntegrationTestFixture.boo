@@ -358,6 +358,10 @@ class DuckyIntegrationTestFixture(AbstractIntegrationTestFixture):
 		RunTestCase("tests/integration/for-continue-2.js")
 		
 	
+	[Test] def for_in_switch_break():
+		RunTestCase("tests/integration/for-in-switch-break.js")
+		
+	
 	[Test] def for_over_null():
 		RunTestCase("tests/integration/for-over-null.js")
 		
@@ -368,6 +372,10 @@ class DuckyIntegrationTestFixture(AbstractIntegrationTestFixture):
 	
 	[Test] def functions_1():
 		RunTestCase("tests/integration/functions-1.js")
+		
+	
+	[Test] def functions_as_ternary_operands():
+		RunTestCase("tests/integration/functions-as-ternary-operands.js")
 		
 	
 	[Test] def generator_inheritance_calling_super():
@@ -624,6 +632,10 @@ class DuckyIntegrationTestFixture(AbstractIntegrationTestFixture):
 	
 	[Test] def vars_1():
 		RunTestCase("tests/integration/vars-1.js")
+		
+	
+	[Test] def yield_null():
+		RunTestCase("tests/integration/yield-null.js")
 		
 	
 	[Test] def Array_cast_to_native_array_of_struct():
