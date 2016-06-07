@@ -91,7 +91,7 @@ class MonoBehaviour(Component):
 	[getter(transform)]
 	m_Transform = Transform()
 
-	def StartCoroutine_Auto(routine as IEnumerator):
+	def StartCoroutine(routine as IEnumerator):
 		print("Received coroutine")
 		routine.MoveNext()
 		return routine.Current

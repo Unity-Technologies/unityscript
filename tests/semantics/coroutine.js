@@ -7,7 +7,7 @@ partial public class coroutine(UnityScript.Tests.MonoBehaviour):
 		return coroutine.$spam$2().GetEnumerator()
 
 	public virtual def Awake() as void:
-		enumerate = self.StartCoroutine_Auto(self.spam())
+		enumerate = self.StartCoroutine(self.spam())
 		$iterator$1 = UnityScript.Lang.UnityRuntimeServices.GetEnumerator(enumerate)
 		while $iterator$1.MoveNext():
 			e = $iterator$1.get_Current()

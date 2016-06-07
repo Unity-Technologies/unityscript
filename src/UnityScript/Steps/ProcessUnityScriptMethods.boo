@@ -20,8 +20,8 @@ class ProcessUnityScriptMethods(ProcessMethodBodiesWithDuckTyping):
 		
 	deferred IEnumerator_get_Current = typeof(System.Collections.IEnumerator).GetProperty("Current").GetGetMethod();
 	
-	deferred _StartCoroutine = NameResolutionService.ResolveMethod(UnityScriptTypeSystem.ScriptBaseType, "StartCoroutine_Auto")		
-	
+	deferred _StartCoroutine = NameResolutionService.ResolveMethod(UnityScriptTypeSystem.ScriptBaseType, "StartCoroutine", (typeof(System.Collections.IEnumerator),))
+
 	deferred _UnityRuntimeServices_GetEnumerator = ResolveUnityRuntimeMethod("GetEnumerator")													
 	
 	deferred _UnityRuntimeServices_Update = ResolveUnityRuntimeMethod("Update")
@@ -40,7 +40,7 @@ class ProcessUnityScriptMethods(ProcessMethodBodiesWithDuckTyping):
 		// but into:
 		//		 foo.Equals(null)						
 		self.OptimizeNullComparisons = false
-		
+
 	def ResolveUnityRuntimeMethod(name as string):
 		return NameResolutionService.ResolveMethod(UnityRuntimeServicesType, name)
 		
