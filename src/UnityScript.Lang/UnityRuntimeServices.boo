@@ -19,7 +19,7 @@ class UnityRuntimeServices:
 		if not IsGenerator(returnValue): return returnValue
 		if not target.GetType().IsSubclassOf(scriptBaseType): return returnValue
 		if IsStaticMethod(target.GetType(), name, args): return returnValue
-		return cast(duck, target).StartCoroutine_Auto(returnValue)
+		return cast(duck, target).StartCoroutine(returnValue)
 		
 	static def GetProperty(target, name as string):
 		assert Initialized

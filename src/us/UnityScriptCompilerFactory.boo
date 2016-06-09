@@ -32,7 +32,7 @@ class UnityScriptCompilerFactory:
 			compiler.Parameters.OutputAssembly = options.Output
 			
 		for define in options.Defines:
-			compiler.Parameters.Defines.Add(define, define)
+			compiler.Parameters.Defines[define] = define
 			
 		compiler.Parameters.OutputType = options.OutputType
 		
