@@ -1468,7 +1468,9 @@ class UnityScriptLexer(antlr.CharScanner, TokenStream):
 		if synPredMatched413:
 			mML_COMMENT(false)
 			if 0 == inputState.guessing:
-				if not PreserveComments:
+				if PreserveComments:
+					_ttype = ML_COMMENT
+				else:
 					_ttype = Token.SKIP
 		elif ((cached_LA1==char('/')) and (true)): // line 2102
 			match('/')

@@ -1901,7 +1901,9 @@ AT: '@';
 DIVISION: 
 	("/*")=> ML_COMMENT
 	{
-		if not PreserveComments:
+		if PreserveComments:
+			$setType(ML_COMMENT)
+		else:
 			$setType(Token.SKIP)
 	} |
 //	(RE_LITERAL)=> RE_LITERAL { $setType(RE_LITERAL); } |	
